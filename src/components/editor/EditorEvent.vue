@@ -13,7 +13,7 @@
 import EditorEventBus, { events } from '@/components/editor/eventbus';
 import { getCaretPosition, getCurrentCaretRange, setCaretRange } from '@/lib/position';
 import { isControlKey } from '@/lib/keys';
-import { reformatter } from '@/lib/stylizer';
+import { reformatString } from '@/lib/stylizer';
 
 /**
  * This component collects the input events of the editor. It passes events using
@@ -110,7 +110,7 @@ export default {
       let newContent = event.clipboardData.getData('text/plain').replace(/\n/g, ' ');
 
       if (this.shouldReformat === true) {
-        newContent = reformatter(newContent);
+        newContent = reformatString(newContent);
       }
 
       this.content = newContent;
