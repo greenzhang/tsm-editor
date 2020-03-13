@@ -1,12 +1,21 @@
 class TSMFunction {
-  constructor(name, args, definition) {
+  constructor(name, args, definition, evalFunction) {
     this.name = name;
     this.args = args;
     this.definition = definition;
+    this.evalFunction = evalFunction;
   }
 
   getCompletion() {
     return `${this.name}(`;
+  }
+
+  makeEvaluator(childrenFunctions) {
+    if (this.evalFunction === null) {
+      throw new Error(`No implementation for function '${this.name}'`);
+    }
+
+    return input => this.evalFunction(input, childrenFunctions);
   }
 }
 
@@ -18,6 +27,16 @@ class TSMKeyword {
 
   getCompletion() {
     return this.name;
+  }
+
+  makeEvaluator() {
+    return (input) => {
+      if (input[this.name]) {
+        return input[this.name];
+      }
+
+      throw new Error(`Input does not contain ${this.name}`);
+    };
   }
 }
 

@@ -1,31 +1,31 @@
 /* eslint-disable import/extensions */
-import { reformatter, stylizeString } from '@/lib/stylizer.js';
+import { reformatString, stylizeString } from '@/lib/stylizer.js';
 import { symbols, functions } from '@/lib/definitions.js';
 
-describe('reformatter', () => {
+describe('reformatString', () => {
   it('adds a single space after commas', () => {
     const text = 'first(Crafting,DBMarket,DBRegionMarketAvg)';
-    expect(reformatter(text)).toMatch('first(Crafting, DBMarket, DBRegionMarketAvg)');
+    expect(reformatString(text)).toMatch('first(Crafting, DBMarket, DBRegionMarketAvg)');
   });
 
   it('adds does not remove extraneous spaces', () => {
-    expect(reformatter('DBMarket   +DBRegionMarketAvg')).toMatch('DBMarket    + DBRegionMarketAvg');
+    expect(reformatString('DBMarket   +DBRegionMarketAvg')).toMatch('DBMarket    + DBRegionMarketAvg');
   });
 
   it('corrects lowercase symbol names', () => {
-    expect(reformatter('dbmarket')).toMatch('DBMarket');
+    expect(reformatString('dbmarket')).toMatch('DBMarket');
   });
 
   it('corrects wrong-cased function names', () => {
-    expect(reformatter('MAX()')).toMatch('max()');
+    expect(reformatString('MAX()')).toMatch('max()');
   });
 
   it('pads item links with a space WITHOUT adding spaces inside the brackets', () => {
-    expect(reformatter('[Bag of Tricks  with extra space there]')).toMatch(' [Bag of Tricks  with extra space there] ');
+    expect(reformatString('[Bag of Tricks  with extra space there]')).toMatch(' [Bag of Tricks  with extra space there] ');
   });
 
   it('does not add a space between a value and %', () => {
-    expect(reformatter('200% DBMarket')).toEqual('200% DBMarket');
+    expect(reformatString('200% DBMarket')).toEqual('200% DBMarket');
   });
 });
 
